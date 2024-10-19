@@ -51,7 +51,7 @@ photosReducer.post(
             }
             const photoData = {
                 user: req.user,
-                name: req.body.title,
+                title: req.body.title,
                 image: req.file ? req.file.filename : null,
             };
 

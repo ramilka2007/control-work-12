@@ -66,6 +66,27 @@ const UserMenu: React.FC<Props> = ({ user, googleAccount }) => {
           onClose={handleClose}
         >
           <MenuItem
+              component={NavLink}
+              className="text-decoration-none text-black"
+              to={`/photos?user=${user._id}`}
+          >
+            {user.displayName}
+          </MenuItem>
+          {user.role === 'admin' ? <MenuItem
+              component={NavLink}
+              className="text-decoration-none text-black"
+              to="/photos"
+          >
+            All photos
+          </MenuItem> : null}
+          <MenuItem
+              component={NavLink}
+              className="text-decoration-none text-black"
+              to={`/add-photo`}
+          >
+            Add photo
+          </MenuItem>
+          <MenuItem
             onClick={handleLogout}
             component={NavLink}
             className="text-decoration-none text-black"

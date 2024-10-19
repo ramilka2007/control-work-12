@@ -34,3 +34,15 @@ export interface LoginMutation {
 export interface GlobalError {
   error: string;
 }
+
+export interface PhotoForm {
+  title: string;
+  image: File | null;
+}
+
+export interface Photo {
+  _id: string;
+  user: User;
+  title: string;
+  image: string;
+}
