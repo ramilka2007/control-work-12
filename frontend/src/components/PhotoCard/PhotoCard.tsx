@@ -16,13 +16,14 @@ import {NavLink} from "react-router-dom";
 
 interface Props {
     photo: Photo;
+    userId?: string;
 }
 
 const PhotoCard: React.FC<Props> = ({
                                         photo,
+    userId
                                     }) => {
     const user = useAppSelector(selectUser);
-    console.log(user)
 
     return (
         <>
@@ -59,7 +60,7 @@ const PhotoCard: React.FC<Props> = ({
                     </Typography>
                 </CardContent>
                 <div className="mb-3">
-                    {user.role === 'admin' || user._id === photo.user._id && (<DeleteButtonPopUp photoId={photo._id}/>)}
+                    {user.role === 'admin' || user._id === photo.user._id && (<DeleteButtonPopUp photoId={photo._id} userId={userId}/>)}
 
                 </div>
             </Card>

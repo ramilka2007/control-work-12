@@ -27,29 +27,29 @@ const photosSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getPhotos.pending, (state) => {
-                state.addLoading = true;
+                state.isLoading = true;
                 state.isError = false;
             })
             .addCase(getPhotos.fulfilled, (state, { payload: photos }) => {
-                state.addLoading = false;
+                state.isLoading = false;
                 state.photos = photos
             })
             .addCase(getPhotos.rejected, (state) => {
-                state.addLoading = false;
+                state.isLoading = false;
                 state.isError = true;
             });
 
         builder
             .addCase(getUserPhotos.pending, (state) => {
-                state.addLoading = true;
+                state.isLoading = true;
                 state.isError = false;
             })
             .addCase(getUserPhotos.fulfilled, (state, { payload: photos }) => {
-                state.addLoading = false;
+                state.isLoading = false;
                 state.userPhotos = photos;
             })
             .addCase(getUserPhotos.rejected, (state) => {
-                state.addLoading = false;
+                state.isLoading = false;
                 state.isError = true;
             });
 

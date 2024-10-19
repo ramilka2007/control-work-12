@@ -26,8 +26,6 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     dispatch(logout());
   };
 
-  console.log(user)
-
   return (
     <>
       <Box>

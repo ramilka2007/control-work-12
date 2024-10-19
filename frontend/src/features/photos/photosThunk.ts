@@ -26,13 +26,13 @@ export const addPhoto = createAsyncThunk(
             data.append('image', newPhoto.image);
         }
 
-        return await axiosApi.post('/photos', data);
+        await axiosApi.post('/photos', data);
     },
 );
 
 export const deletePhoto = createAsyncThunk(
     'photos/delete-photo',
     async (id: string) => {
-        return await axiosApi.delete(`/photos/${id}`);
+        await axiosApi.delete(`/photos/${id}`);
     },
 );

@@ -3,15 +3,18 @@ import { Popper } from '@mui/base/Popper';
 import { styled, css } from '@mui/system';
 import {LoadingButton} from "@mui/lab";
 import {deletePhoto, getPhotos, getUserPhotos} from "../../features/photos/photosThunk.ts";
-import {useAppDispatch} from "../../app/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
+import {selectPhotosDeleteLoading} from "../../features/photos/photosSlice.ts";
 
 interface Props {
     photoId: string;
+    userId?: string;
 }
 
-const DeleteButtonPopUp: React.FC<Props> = ({photoId}) => {
+const DeleteButtonPopUp: React.FC<Props> = ({photoId, userId}) => {
     const dispatch = useAppDispatch();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const deleteLoading = useAppSelector(selectPhotosDeleteLoading)
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -23,8 +26,11 @@ const DeleteButtonPopUp: React.FC<Props> = ({photoId}) => {
     const photoDeleter = async (id: string) => {
         try {
             await dispatch(deletePhoto(id));
+            if (userId){
+                await dispatch(getUserPhotos(userId))
+            }
+
             await dispatch(getPhotos());
-            await dispatch(getUserPhotos())
         } catch (e) {
             console.log(e);
         }
@@ -40,6 +46,7 @@ const DeleteButtonPopUp: React.FC<Props> = ({photoId}) => {
                     <LoadingButton
                         className="btn btn-danger me-2"
                         onClick={() => photoDeleter(photoId)}
+                        loading={deleteLoading}
                     >
                         Yes
                     </LoadingButton>

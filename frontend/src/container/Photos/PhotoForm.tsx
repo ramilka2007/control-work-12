@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import FileInput from "../../UI/FileInput/FileInput.tsx";
 import {LoadingButton} from "@mui/lab";
 import {Grid} from "@mui/material";
-import {useAppDispatch} from "../../app/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {useNavigate} from "react-router-dom";
 import {PhotoForm} from "../../types.ts";
 import {addPhoto} from "../../features/photos/photosThunk.ts";
+import {selectPhotosAddLoading} from "../../features/photos/photosSlice.ts";
 
 const PhotoForm = () => {
     const dispatch = useAppDispatch();
@@ -14,6 +15,7 @@ const PhotoForm = () => {
         title: '',
         image: null,
     })
+    const addLoading = useAppSelector(selectPhotosAddLoading);
 
     const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -74,6 +76,7 @@ const PhotoForm = () => {
                     type="submit"
                     className="btn btn-primary mt-3"
                     disabled={newPhoto.image === null || newPhoto.title === ''}
+                    loading={addLoading}
                 >
                     Create
                 </LoadingButton>
