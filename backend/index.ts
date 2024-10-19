@@ -3,7 +3,7 @@ import cors from 'cors';
 import config from './config';
 import mongoose from 'mongoose';
 import usersRouter from './routers/users';
-import photosReducer from "./routers/photos";
+import photosReducer from './routers/photos';
 
 const app = express();
 const port = 8000;
@@ -15,15 +15,15 @@ app.use('/users', usersRouter);
 app.use('/photos', photosReducer);
 
 const run = async () => {
-    await mongoose.connect(config.database);
+  await mongoose.connect(config.database);
 
-    app.listen(port, () => {
-        console.log(`Server started on ${port} port!`);
-    });
+  app.listen(port, () => {
+    console.log(`Server started on ${port} port!`);
+  });
 
-    process.on('exit', () => {
-        mongoose.disconnect();
-    });
+  process.on('exit', () => {
+    mongoose.disconnect();
+  });
 };
 
 run().catch(console.error);

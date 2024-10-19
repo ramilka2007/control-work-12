@@ -33,13 +33,13 @@ const UserMenu: React.FC<Props> = ({ user }) => {
           Hello, {user.displayName ? user.displayName : user.username}!
           {user.googleAccount ? (
             <>
-                <img
-                  src={user.avatar}
-                  alt=""
-                  width="50px"
-                  height="50px"
-                  className="rounded-circle ms-2"
-                />
+              <img
+                src={user.avatar}
+                alt=""
+                width="50px"
+                height="50px"
+                className="rounded-circle ms-2"
+              />
             </>
           ) : (
             <>
@@ -63,23 +63,16 @@ const UserMenu: React.FC<Props> = ({ user }) => {
           onClose={handleClose}
         >
           <MenuItem
-              component={NavLink}
-              className="text-decoration-none text-black"
-              to={`/users/${user._id}`}
+            component={NavLink}
+            className="text-decoration-none text-black"
+            to={`/photos/user/${user._id}`}
           >
             {user.displayName}
           </MenuItem>
-          {user.role === 'admin' ? <MenuItem
-              component={NavLink}
-              className="text-decoration-none text-black"
-              to="/photos"
-          >
-            All photos
-          </MenuItem> : null}
           <MenuItem
-              component={NavLink}
-              className="text-decoration-none text-black"
-              to={`/add-photo`}
+            component={NavLink}
+            className="text-decoration-none text-black"
+            to={`/add-photo`}
           >
             Add photo
           </MenuItem>

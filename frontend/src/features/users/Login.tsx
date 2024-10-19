@@ -55,88 +55,88 @@ const Login = () => {
   };
 
   return (
-      <Container component="main" maxWidth="xs">
-        <Box
-            style={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+    <Container component="main" maxWidth="xs">
+      <Box
+        style={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        {error && (
+          <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
+            {error.error}
+          </Alert>
+        )}
+
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOpenIcon />
+        </Avatar>
+
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+
+        <Box sx={{ pt: 2 }}>
+          <GoogleLogin
+            onSuccess={googleLoginHandler}
+            onError={() => {
+              console.log('Login Failed');
             }}
-        >
-          {error && (
-              <Alert severity="error" sx={{ mt: 3, width: '100%' }}>
-                {error.error}
-              </Alert>
-          )}
-
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOpenIcon />
-          </Avatar>
-
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-
-          <Box sx={{ pt: 2 }}>
-            <GoogleLogin
-                onSuccess={googleLoginHandler}
-                onError={() => {
-                  console.log('Login Failed');
-                }}
-            />
-          </Box>
-
-          <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                    required
-                    label="Email"
-                    name="username"
-                    autoComplete="current-username"
-                    value={state.username}
-                    onChange={inputChangeHandler}
-                    error={Boolean(getFieldError('username'))}
-                    helperText={getFieldError('username')}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                    required
-                    label="Password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    value={state.password}
-                    onChange={inputChangeHandler}
-                    error={Boolean(getFieldError('password'))}
-                    helperText={getFieldError('password')}
-                />
-              </Grid>
-            </Grid>
-
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                className="btn bg-dark text-white"
-                sx={{ mt: 3, mb: 2 }}
-                disabled={state.username === '' || state.password === ''}
-            >
-              Sign In
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link component={RouterLink} to="/register" variant="body2">
-                  Or sign up
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+          />
         </Box>
-      </Container>
+
+        <Box component="form" onSubmit={submitFormHandler} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                label="Email"
+                name="username"
+                autoComplete="current-username"
+                value={state.username}
+                onChange={inputChangeHandler}
+                error={Boolean(getFieldError('username'))}
+                helperText={getFieldError('username')}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                required
+                label="Password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                value={state.password}
+                onChange={inputChangeHandler}
+                error={Boolean(getFieldError('password'))}
+                helperText={getFieldError('password')}
+              />
+            </Grid>
+          </Grid>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            className="btn bg-dark text-white"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={state.username === '' || state.password === ''}
+          >
+            Sign In
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link component={RouterLink} to="/register" variant="body2">
+                Or sign up
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

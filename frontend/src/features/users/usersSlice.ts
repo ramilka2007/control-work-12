@@ -72,8 +72,5 @@ export const usersReducer = usersSlice.reducer;
 
 export const { unsetUser } = usersSlice.actions;
 
-export const {
-  selectUser,
-  selectRegisterError,
-  selectLoginError,
-} = usersSlice.selectors;
+export const { selectUser, selectRegisterError, selectLoginError } =
+  usersSlice.selectors;

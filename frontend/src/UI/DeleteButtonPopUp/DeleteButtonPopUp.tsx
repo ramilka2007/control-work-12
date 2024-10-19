@@ -1,92 +1,96 @@
 import * as React from 'react';
 import { Popper } from '@mui/base/Popper';
 import { styled, css } from '@mui/system';
-import {LoadingButton} from "@mui/lab";
-import {deletePhoto, getPhotos, getUserPhotos} from "../../features/photos/photosThunk.ts";
-import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {selectPhotosDeleteLoading} from "../../features/photos/photosSlice.ts";
+import { LoadingButton } from '@mui/lab';
+import {
+  deletePhoto,
+  getPhotos,
+  getUserPhotos,
+} from '../../features/photos/photosThunk.ts';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import { selectPhotosDeleteLoading } from '../../features/photos/photosSlice.ts';
 
 interface Props {
-    photoId: string;
-    userId?: string;
+  photoId: string;
+  userId?: string;
 }
 
-const DeleteButtonPopUp: React.FC<Props> = ({photoId, userId}) => {
-    const dispatch = useAppDispatch();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const deleteLoading = useAppSelector(selectPhotosDeleteLoading)
+const DeleteButtonPopUp: React.FC<Props> = ({ photoId, userId }) => {
+  const dispatch = useAppDispatch();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const deleteLoading = useAppSelector(selectPhotosDeleteLoading);
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(anchorEl ? null : event.currentTarget);
-    };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popper' : undefined;
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
 
-    const photoDeleter = async (id: string) => {
-        try {
-            await dispatch(deletePhoto(id));
-            if (userId){
-                await dispatch(getUserPhotos(userId))
-            }
+  const photoDeleter = async (id: string) => {
+    try {
+      await dispatch(deletePhoto(id));
+      if (userId) {
+        await dispatch(getUserPhotos(userId));
+      }
 
-            await dispatch(getPhotos());
-        } catch (e) {
-            console.log(e);
-        }
-    };
+      await dispatch(getPhotos());
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    return (
-        <div>
-            <TriggerButton aria-describedby={id} type="button" onClick={handleClick}>
-                Delete
-            </TriggerButton>
-            <Popper id={id} open={open} anchorEl={anchorEl}>
-                <StyledPopperDiv>
-                    <LoadingButton
-                        className="btn btn-danger me-2"
-                        onClick={() => photoDeleter(photoId)}
-                        loading={deleteLoading}
-                    >
-                        Yes
-                    </LoadingButton>
-                    <LoadingButton className="btn btn-primary me-2" onClick={handleClick}>
-                        No
-                    </LoadingButton>
-                </StyledPopperDiv>
-            </Popper>
-        </div>
-    );
+  return (
+    <div>
+      <TriggerButton aria-describedby={id} type="button" onClick={handleClick}>
+        Delete
+      </TriggerButton>
+      <Popper id={id} open={open} anchorEl={anchorEl}>
+        <StyledPopperDiv>
+          <LoadingButton
+            className="btn btn-danger me-2"
+            onClick={() => photoDeleter(photoId)}
+            loading={deleteLoading}
+          >
+            Yes
+          </LoadingButton>
+          <LoadingButton className="btn btn-primary me-2" onClick={handleClick}>
+            No
+          </LoadingButton>
+        </StyledPopperDiv>
+      </Popper>
+    </div>
+  );
 };
 
 const blue = {
-    50: '#F0F7FF',
-    100: '#C2E0FF',
-    200: '#99CCF3',
-    300: '#66B2FF',
-    400: '#3399FF',
-    500: '#007FFF',
-    600: '#0072E5',
-    700: '#0059B2',
-    800: '#004C99',
-    900: '#003A75',
+  50: '#F0F7FF',
+  100: '#C2E0FF',
+  200: '#99CCF3',
+  300: '#66B2FF',
+  400: '#3399FF',
+  500: '#007FFF',
+  600: '#0072E5',
+  700: '#0059B2',
+  800: '#004C99',
+  900: '#003A75',
 };
 
 const grey = {
-    50: '#F3F6F9',
-    100: '#E5EAF2',
-    200: '#DAE2ED',
-    300: '#C7D0DD',
-    400: '#B0B8C4',
-    500: '#9DA8B7',
-    600: '#6B7A90',
-    700: '#434D5B',
-    800: '#303740',
-    900: '#1C2025',
+  50: '#F3F6F9',
+  100: '#E5EAF2',
+  200: '#DAE2ED',
+  300: '#C7D0DD',
+  400: '#B0B8C4',
+  500: '#9DA8B7',
+  600: '#6B7A90',
+  700: '#434D5B',
+  800: '#303740',
+  900: '#1C2025',
 };
 
 const TriggerButton = styled('button')(
-    ({ theme }) => `
+  ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
   font-size: 0.875rem;
@@ -99,8 +103,10 @@ const TriggerButton = styled('button')(
   cursor: pointer;
   border: 1px solid ${blue[500]};
   box-shadow: 0 2px 1px ${
-        theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'
-    }, inset 0 1.5px 1px ${blue[400]}, inset 0 -2px 1px ${blue[600]};
+    theme.palette.mode === 'dark'
+      ? 'rgba(0, 0, 0, 0.5)'
+      : 'rgba(45, 45, 60, 0.2)'
+  }, inset 0 1.5px 1px ${blue[400]}, inset 0 -2px 1px ${blue[600]};
 
   &:hover {
     background-color: ${blue[600]};
@@ -128,13 +134,13 @@ const TriggerButton = styled('button')(
 );
 
 const StyledPopperDiv = styled('div')(
-    ({ theme }) => css`
+  ({ theme }) => css`
     background-color: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
     border-radius: 8px;
     border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
     box-shadow: ${theme.palette.mode === 'dark'
-        ? `0px 4px 8px rgb(0 0 0 / 0.7)`
-        : `0px 4px 8px rgb(0 0 0 / 0.1)`};
+      ? `0px 4px 8px rgb(0 0 0 / 0.7)`
+      : `0px 4px 8px rgb(0 0 0 / 0.1)`};
     padding: 0.75rem;
     color: ${theme.palette.mode === 'dark' ? grey[100] : grey[700]};
     font-size: 0.875rem;
@@ -145,4 +151,4 @@ const StyledPopperDiv = styled('div')(
   `,
 );
 
-export default DeleteButtonPopUp
+export default DeleteButtonPopUp;

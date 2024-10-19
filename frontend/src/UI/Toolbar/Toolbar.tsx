@@ -2,9 +2,7 @@ import { NavLink } from 'react-router-dom';
 import AnonymousMenu from './AnonymousMenu';
 import UserMenu from './UserMenu';
 import { useAppSelector } from '../../app/hooks';
-import {
-  selectUser,
-} from '../../features/users/usersSlice';
+import { selectUser } from '../../features/users/usersSlice';
 
 const Toolbar = () => {
   const user = useAppSelector(selectUser);
@@ -15,13 +13,7 @@ const Toolbar = () => {
         <NavLink to="/" className="navbar-brand d-flex ">
           <p className="me-2 mb-0">Photo gallery</p>
         </NavLink>
-        <div>
-          {user ? (
-            <UserMenu user={user} />
-          ) : (
-            <AnonymousMenu />
-          )}
-        </div>
+        <div>{user ? <UserMenu user={user} /> : <AnonymousMenu />}</div>
       </div>
     </nav>
   );
