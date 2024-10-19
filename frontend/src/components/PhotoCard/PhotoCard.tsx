@@ -15,6 +15,8 @@ interface Props {
 }
 
 const PhotoCard: React.FC<Props> = ({ photo, userId }) => {
+    const user = useAppSelector(selectUser);
+
   return (
     <>
       <Card sx={{ maxWidth: 400 }}>

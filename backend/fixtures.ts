@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import config from './config';
 import User from './models/User';
+import Photo from "./models/Photo";
 
 const run = async () => {
   await mongoose.connect(config.database);
@@ -29,6 +30,27 @@ const run = async () => {
       token: crypto.randomUUID(),
     },
   );
+
+    await Photo.create(
+        {
+            user: user1,
+            title: 'Priroda',
+            image: 'fixtures/images.jpeg'
+        },
+        {
+            user: user2,
+            title: 'Priroda2',
+            image: 'fixtures/images2.jpeg'
+        },{
+            user: user2,
+            title: 'Priroda3',
+            image: 'fixtures/images3.jpg'
+        },{
+            user: user1,
+            title: 'Nature',
+            image: 'fixtures/images.jpeg'
+        },
+    );
 
   await db.close();
 };
