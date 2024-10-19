@@ -45,6 +45,7 @@ const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
         type: String,
         required: true,
     },
+    googleAccount: Boolean,
     googleID: String,
     avatar: {
         type: String,

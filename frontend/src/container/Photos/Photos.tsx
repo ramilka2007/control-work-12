@@ -1,33 +1,34 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {getPhotos} from "../../features/photos/photosThunk.ts";
-import {selectPhotos} from "../../features/photos/photosSlice.ts";
+import {getUserPhotos} from "../../features/photos/photosThunk.ts";
+import {selectUserPhotos} from "../../features/photos/photosSlice.ts";
 import PhotoCard from "../../components/PhotoCard/PhotoCard.tsx";
+import {useParams} from "react-router-dom";
 
-const Home = () => {
+const Photos = () => {
+    const {id} = useParams() as {id: string};
     const dispatch = useAppDispatch();
-    const photos = useAppSelector(selectPhotos);
-    console.log(photos)
-    useEffect(() => {
-        dispatch(getPhotos())
-    }, [])
+    const photos = useAppSelector(selectUserPhotos);
 
-    return (
+    useEffect(() => {
+        dispatch(getUserPhotos(id))
+    }, [dispatch]);
+    return photos && (
         <div className="container">
             {photos.length > 0 ? (
                 <>
-                    <h3>Photos:</h3>
+                    <h3>{photos[0].user.displayName} photos:</h3>
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 gap-5">
                         <>
                             {photos.map((photo) => (
-                                <PhotoCard key={photo._id} photo={photo} homePage={true}/>
+                                <PhotoCard key={photo._id + photo.user._id} photo={photo} homePage={false}/>
                             ))}
                         </>
                     </div>
                 </>
             ) : <h1 className="text-center">No photos.</h1>}
         </div>
-    );
+    )
 };
 
-export default Home;
+export default Photos;

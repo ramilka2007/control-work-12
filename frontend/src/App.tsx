@@ -7,6 +7,7 @@ import Register from "./features/users/Register.tsx";
 import Login from "./features/users/Login.tsx";
 import ProtectedRoute from "./UI/ProtectedRoute/ProtectedRoute.tsx";
 import PhotoForm from "./container/Photos/PhotoForm.tsx";
+import Photos from "./container/Photos/Photos.tsx";
 
 const App = () => {
     const user = useAppSelector(selectUser);
@@ -21,6 +22,7 @@ const App = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/add-photo" element={<ProtectedRoute isAllowed={user}><PhotoForm/></ProtectedRoute>}/>
+                    <Route path="/photos/user/:id" element={<ProtectedRoute isAllowed={user}><Photos/></ProtectedRoute>}/>
                 </Routes>
             </main>
         </>

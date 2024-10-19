@@ -8,10 +8,9 @@ import { API_URL } from '../../constants';
 
 interface Props {
   user: User;
-  googleAccount: boolean;
 }
 
-const UserMenu: React.FC<Props> = ({ user, googleAccount }) => {
+const UserMenu: React.FC<Props> = ({ user }) => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -27,14 +26,15 @@ const UserMenu: React.FC<Props> = ({ user, googleAccount }) => {
     dispatch(logout());
   };
 
+  console.log(user)
+
   return (
     <>
       <Box>
         <Button onClick={handleClick} className="text-white">
           Hello, {user.displayName ? user.displayName : user.username}!
-          {googleAccount ? (
+          {user.googleAccount ? (
             <>
-              {user.avatar ? (
                 <img
                   src={user.avatar}
                   alt=""
@@ -42,7 +42,6 @@ const UserMenu: React.FC<Props> = ({ user, googleAccount }) => {
                   height="50px"
                   className="rounded-circle ms-2"
                 />
-              ) : null}
             </>
           ) : (
             <>
@@ -68,7 +67,7 @@ const UserMenu: React.FC<Props> = ({ user, googleAccount }) => {
           <MenuItem
               component={NavLink}
               className="text-decoration-none text-black"
-              to={`/photos?user=${user._id}`}
+              to={`/users/${user._id}`}
           >
             {user.displayName}
           </MenuItem>

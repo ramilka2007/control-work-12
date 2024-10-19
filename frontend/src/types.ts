@@ -11,6 +11,7 @@ export interface User {
   role: string;
   token: string;
   displayName: string;
+  googleAccount?: boolean;
   avatar?: string;
 }
 

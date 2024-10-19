@@ -11,6 +11,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from 'redux-persist';
+import {photosReducer} from "../features/photos/photosSlice.ts";
 
 const usersPersistConfig = {
   key: 'store:users',
@@ -19,6 +20,7 @@ const usersPersistConfig = {
 };
 
 export const rootReducer = combineReducers({
+  photos: photosReducer,
   users: persistReducer(usersPersistConfig, usersReducer),
 });
 

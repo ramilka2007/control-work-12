@@ -62,6 +62,7 @@ usersRouter.post('/google', async (req, res, next) => {
                 username: email,
                 password: newPassword,
                 googleId: id,
+                googleAccount: true,
                 displayName,
                 avatar,
             });

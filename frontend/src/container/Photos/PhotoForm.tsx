@@ -5,6 +5,7 @@ import {Grid} from "@mui/material";
 import {useAppDispatch} from "../../app/hooks.ts";
 import {useNavigate} from "react-router-dom";
 import {PhotoForm} from "../../types.ts";
+import {addPhoto} from "../../features/photos/photosThunk.ts";
 
 const PhotoForm = () => {
     const dispatch = useAppDispatch();
@@ -16,6 +17,8 @@ const PhotoForm = () => {
 
     const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        await dispatch(addPhoto(newPhoto));
         navigate('/');
     };
 
@@ -46,13 +49,13 @@ const PhotoForm = () => {
             <form onSubmit={onFormSubmit} className="w-50 mx-auto">
                 <h2 className="text-center my-4">Create new item card</h2>
                 <div className="mb-3 mx-auto">
-                    <label htmlFor="name" className="form-label">
-                        Name
+                    <label htmlFor="title" className="form-label">
+                        Title
                     </label>
                     <input
                         type="text"
-                        name="name"
-                        id="name"
+                        name="title"
+                        id="title"
                         required
                         className="form-control"
                         value={newPhoto.title}
@@ -70,6 +73,7 @@ const PhotoForm = () => {
                 <LoadingButton
                     type="submit"
                     className="btn btn-primary mt-3"
+                    disabled={newPhoto.image === null || newPhoto.title === ''}
                 >
                     Create
                 </LoadingButton>

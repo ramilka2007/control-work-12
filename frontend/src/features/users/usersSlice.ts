@@ -8,7 +8,6 @@ interface UsersState {
   registerError: ValidationError | null;
   loginLoading: boolean;
   loginError: GlobalError | null;
-  googleAccount: boolean;
 }
 
 const initialState: UsersState = {
@@ -17,7 +16,6 @@ const initialState: UsersState = {
   registerError: null,
   loginLoading: false,
   loginError: null,
-  googleAccount: false,
 };
 
 export const usersSlice = createSlice({
@@ -31,7 +29,6 @@ export const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
-        state.googleAccount = false;
         state.registerError = null;
       })
       .addCase(register.fulfilled, (state, { payload: user }) => {
@@ -43,7 +40,6 @@ export const usersSlice = createSlice({
 
     builder
       .addCase(login.pending, (state) => {
-        state.googleAccount = false;
         state.loginError = null;
       })
       .addCase(login.fulfilled, (state, { payload: user }) => {
@@ -56,11 +52,9 @@ export const usersSlice = createSlice({
 
     builder
       .addCase(googleLogin.pending, (state) => {
-        state.googleAccount = false;
         state.loginError = null;
       })
       .addCase(googleLogin.fulfilled, (state, { payload: user }) => {
-        state.googleAccount = true;
         state.user = user;
       })
       .addCase(googleLogin.rejected, (state, { payload: error }) => {
@@ -71,7 +65,6 @@ export const usersSlice = createSlice({
     selectUser: (state) => state.user,
     selectRegisterError: (state) => state.registerError,
     selectLoginError: (state) => state.loginError,
-    selectGoogleAccount: (state) => state.googleAccount,
   },
 });
 
@@ -83,5 +76,4 @@ export const {
   selectUser,
   selectRegisterError,
   selectLoginError,
-  selectGoogleAccount,
 } = usersSlice.selectors;
